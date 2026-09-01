@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DyePack
 
-## Getting Started
+**Provenance guardrails for WebMCP.**
 
-First, run the development server:
+WebMCP lets a site hand an agent real tools. It has no concept of *where an
+instruction came from*. So a trustworthy site with honest tools can be aimed by
+one untrustworthy sentence sitting in its own user-generated content.
+
+DyePack dyes untrusted DOM regions, intercepts every tool call before it
+executes, and stops any call whose arguments were derived from dyed content —
+then points at the exact sentence that tried it.
+
+> What happens when a trusted site's honest tools are aimed by an untrusted sentence?
+
+## Status
+
+Built for [The WebMCP Challenge](https://webmcp.devpost.com/) (Aug 25 – Sep 3, 2026).
+
+## Requirements
+
+- Chrome 149+ with `chrome://flags/#enable-webmcp-testing` enabled
+- Node 20+, pnpm
+
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+cp .env.example .env.local   # add OPENAI_API_KEY
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open `/smoke` first — it verifies the WebMCP gate before anything else.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Route | What it is |
+|---|---|
+| `/` | The argument |
+| `/split` | Side-by-side: same prompt, same store, guard off vs on |
+| `/store` | Harbor & Loom — a real working storefront with 9 WebMCP tools |
+| `/smoke` | WebMCP environment check |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## The module
 
-## Learn More
+`src/dyepack/` is dependency-free and imports nothing from the app. It is meant
+to be extracted into a standalone package.
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT — see [LICENSE](./LICENSE).
