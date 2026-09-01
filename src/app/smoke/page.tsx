@@ -15,28 +15,28 @@ export default function SmokePage() {
       label: "Secure context",
       state: window.isSecureContext ? "pass" : "fail",
       detail: window.isSecureContext
-        ? "localhost / https terdeteksi"
-        : "WebMCP butuh secure context (localhost atau https)",
+        ? "localhost / https detected"
+        : "WebMCP requires a secure context (localhost or https)",
     });
 
     results.push({
-      label: "document.modelContext tersedia",
+      label: "document.modelContext available",
       state: ctx ? "pass" : "fail",
       detail: ctx
         ? `typeof = ${typeof ctx}`
-        : "Aktifkan chrome://flags/#enable-webmcp-testing lalu relaunch Chrome",
+        : "Enable chrome://flags/#enable-webmcp-testing and relaunch Chrome",
     });
 
     results.push({
-      label: "registerTool() ada",
+      label: "registerTool() present",
       state:
         ctx && typeof (ctx as { registerTool?: unknown }).registerTool === "function"
           ? "pass"
           : "fail",
       detail:
         ctx && typeof (ctx as { registerTool?: unknown }).registerTool === "function"
-          ? "siap dipanggil"
-          : "API belum terekspos di build Chrome ini",
+          ? "ready"
+          : "API not exposed in this Chrome build",
     });
 
     setChecks(results);
@@ -66,11 +66,11 @@ export default function SmokePage() {
       .then(() =>
         setChecks((c) => [
           ...c,
-          { label: "Tool terdaftar", state: "pass", detail: "dyepack_smoke_ping hidup" },
+          { label: "Tool registered", state: "pass", detail: "dyepack_smoke_ping is live" },
         ]),
       )
       .catch((e: Error) =>
-        setChecks((c) => [...c, { label: "Tool terdaftar", state: "fail", detail: e.message }]),
+        setChecks((c) => [...c, { label: "Tool registered", state: "fail", detail: e.message }]),
       );
 
     return () => controller.abort();
@@ -79,22 +79,31 @@ export default function SmokePage() {
   const allPass = checks.length >= 4 && checks.every((c) => c.state === "pass");
 
   return (
-    <main style={{ font: "14px ui-monospace, monospace", padding: 40, lineHeight: 1.7 }}>
-      <h1 style={{ fontSize: 22, marginBottom: 4 }}>DyePack — WebMCP smoke test</h1>
-      <p style={{ opacity: 0.6, marginBottom: 24 }}>Gate #0. Semua harus hijau sebelum lanjut.</p>
-      <ul style={{ listStyle: "none", padding: 0 }}>
-        {checks.map((c) => (
-          <li key={c.label} style={{ marginBottom: 10 }}>
-            <strong>{c.state === "pass" ? "PASS" : "FAIL"}</strong> — {c.label}
-            <div style={{ opacity: 0.6, paddingLeft: 20 }}>{c.detail}</div>
-          </li>
-        ))}
-      </ul>
-      {checks.length > 0 && (
-        <p style={{ marginTop: 24, fontWeight: 700 }}>
-          {allPass ? "GATE LOLOS — lanjut ke Task 2." : "GATE BELUM LOLOS."}
+    <main className="smoke-page">
+      <header className="page-head">
+        <p className="kicker">Environment gate</p>
+        <h1>WebMCP smoke test</h1>
+        <p className="page-head__sub">
+          All four checks must pass before anything else. Chrome 149+ with{" "}
+          <code>chrome://flags/#enable-webmcp-testing</code>.
         </p>
-      )}
+      </header>
+
+      <section className="smoke-grid">
+        {checks.map((c) => (
+          <article key={c.label} className={`smoke-card smoke-card--${c.state}`}>
+            <span className="smoke-card__badge">{c.state.toUpperCase()}</span>
+            <h3>{c.label}</h3>
+            <p>{c.detail}</p>
+          </article>
+        ))}
+      </section>
+
+      <footer className="smoke-verdict">
+        <span className={allPass ? "smoke-verdict--pass" : "smoke-verdict--fail"}>
+          {allPass ? "GATE PASSED — proceed to /split" : "GATE NOT PASSED"}
+        </span>
+      </footer>
     </main>
   );
 }

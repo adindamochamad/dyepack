@@ -159,4 +159,10 @@ export class DyePack {
     this.registry.reset();
     this.ledger.reset();
   }
+
+  /** Clear provenance state between demo runs without unregistering tools. */
+  softReset(): void {
+    this.registry.reset();
+    this.ledger.reset();
+  }
 }

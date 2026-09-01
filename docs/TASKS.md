@@ -7,12 +7,12 @@ Status as of the end of the scaffolding session.
 | 0 | Install Chrome 149+, enable `chrome://flags/#enable-webmcp-testing`, pass `/smoke` | **BLOCKED — human** |
 | 1 | Scaffold, LICENSE, smoke page | done |
 | 2 | `src/dyepack/` core module, 5/5 tests | done |
-| 3 | Store data, WebMCP tool definitions, the poisoned review | next |
-| 4 | Agent driver — `/api/agent` SSE loop + client | |
-| 5 | Split-screen demo — the centerpiece | |
-| 6 | Landing page | |
-| 7 | `THREAT-MODEL.md`, `SPEC-PROPOSAL.md`, `DEMO-SCRIPT.md` | |
-| 8 | Deploy to Vercel, record video, submit | |
+| 3 | Store data, WebMCP tool definitions, the poisoned review | done |
+| 4 | Agent driver — `/api/agent` SSE loop + client | done |
+| 5 | Split-screen demo — the centerpiece | done |
+| 6 | Landing page | done |
+| 7 | `THREAT-MODEL.md`, `SPEC-PROPOSAL.md`, `DEMO-SCRIPT.md` | done |
+| 8 | Deploy to Vercel, record video, submit | next |
 
 ## Task 3 — store and tools
 

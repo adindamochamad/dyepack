@@ -16,7 +16,14 @@ then points at the exact sentence that tried it.
 
 Built for [The WebMCP Challenge](https://webmcp.devpost.com/) (Aug 25 – Sep 3, 2026).
 
-## Requirements
+| Route | What it is |
+|---|---|
+| `/` | Landing — the thesis |
+| `/split` | Side-by-side: same prompt, guard off vs on |
+| `/store` | Harbor & Loom — 9 WebMCP tools |
+| `/smoke` | WebMCP environment check |
+
+**Remaining for submission:** Chrome 149+ verification, Vercel deploy, YouTube demo, Devpost submit.
 
 - Chrome 149+ with `chrome://flags/#enable-webmcp-testing` enabled
 - Node 20+, pnpm

@@ -4,6 +4,8 @@ export { DyeRegistry } from "./dye";
 export { PolicyBook } from "./policy";
 export { Ledger } from "./ledger";
 export { traceProvenance } from "./provenance";
+export { DyeZone as DyeZoneComponent, useDyePack } from "./react";
+export type { UseDyePackOptions } from "./react";
 export type {
   Adjudication,
   Blast,
