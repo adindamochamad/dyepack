@@ -16,6 +16,11 @@ then points at the exact sentence that tried it.
 
 Built for [The WebMCP Challenge](https://webmcp.devpost.com/) (Aug 25 – Sep 3, 2026).
 
+**Live:** https://dyepack-liard.vercel.app  
+**Repo:** https://github.com/adindamochamad/dyepack
+
+**Remaining for submission:** YouTube demo, Devpost submit.
+
 | Route | What it is |
 |---|---|
 | `/` | Landing — the thesis |
@@ -23,27 +28,42 @@ Built for [The WebMCP Challenge](https://webmcp.devpost.com/) (Aug 25 – Sep 3,
 | `/store` | Harbor & Loom — 9 WebMCP tools |
 | `/smoke` | WebMCP environment check |
 
-**Remaining for submission:** Chrome 149+ verification, Vercel deploy, YouTube demo, Devpost submit.
+## Requirements
 
-- Chrome 149+ with `chrome://flags/#enable-webmcp-testing` enabled
+- **Google Chrome 149+** (Brave does not expose WebMCP)
 - Node 20+, pnpm
+
+### WebMCP in Chrome
+
+Either enable the flag in the UI:
+
+1. Open `chrome://flags/#enable-webmcp-testing` → **Enabled**
+2. Relaunch Chrome
+
+Or launch Chrome with CLI flags (used by `pnpm smoke:browser`):
+
+```bash
+--enable-experimental-web-platform-features
+--enable-features=WebMCPTesting,DevToolsWebMCPSupport
+```
 
 ## Run
 
 ```bash
 pnpm install
-cp .env.example .env.local   # add OPENAI_API_KEY
+cp .env.example .env.local   # optional — live LLM mode only
 pnpm dev
 ```
 
-Then open `/smoke` first — it verifies the WebMCP gate before anything else.
+Open `/smoke` first — all four checks must pass before anything else.
 
-| Route | What it is |
-|---|---|
-| `/` | The argument |
-| `/split` | Side-by-side: same prompt, same store, guard off vs on |
-| `/store` | Harbor & Loom — a real working storefront with 9 WebMCP tools |
-| `/smoke` | WebMCP environment check |
+Automated gate (requires Google Chrome installed):
+
+```bash
+pnpm dev          # terminal 1
+pnpm smoke:browser                    # localhost
+SMOKE_URL=https://dyepack-liard.vercel.app pnpm smoke:browser   # production
+```
 
 ## The module
 

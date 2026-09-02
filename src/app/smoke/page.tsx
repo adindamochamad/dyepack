@@ -15,7 +15,7 @@ export default function SmokePage() {
       label: "Secure context",
       state: window.isSecureContext ? "pass" : "fail",
       detail: window.isSecureContext
-        ? "localhost / https detected"
+        ? "secure origin detected"
         : "WebMCP requires a secure context (localhost or https)",
     });
 
@@ -69,9 +69,10 @@ export default function SmokePage() {
           { label: "Tool registered", state: "pass", detail: "dyepack_smoke_ping is live" },
         ]),
       )
-      .catch((e: Error) =>
-        setChecks((c) => [...c, { label: "Tool registered", state: "fail", detail: e.message }]),
-      );
+      .catch((e: Error) => {
+        if (e.name === "AbortError" || /aborted/i.test(e.message)) return;
+        setChecks((c) => [...c, { label: "Tool registered", state: "fail", detail: e.message }]);
+      });
 
     return () => controller.abort();
   }, []);
