@@ -27,11 +27,8 @@ jobs:
       - name: Test provenance engine
         run: pnpm test
 
-      - name: Typecheck
-        run: pnpm typecheck
-
-      - name: Production build
-        run: pnpm build
+      - name: Build + typecheck
+        run: pnpm build && pnpm typecheck
 
       - name: Smoke probe (skip — no Chrome on CI)
         run: pnpm smoke:ci

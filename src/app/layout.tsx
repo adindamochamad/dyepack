@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
     "DyePack dyes untrusted DOM regions, intercepts WebMCP tool calls, and blocks arguments traced to user-generated content.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${plexMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">{children}</body>
