@@ -61,6 +61,7 @@ export function AgentPanel({ label, guarded, autoStart = false, mode = "scripted
     abortRef.current?.abort();
     abortRef.current = new AbortController();
     engineRef.current.reset();
+    registeredRef.current = false;
     softReset();
     setEvents([]);
     setRunning(true);
@@ -92,9 +93,15 @@ export function AgentPanel({ label, guarded, autoStart = false, mode = "scripted
     registerTools();
   }, [dp, registerTools]);
 
+  const runRef = useRef(run);
+  runRef.current = run;
+
   useEffect(() => {
-    if (autoStart) void run();
-  }, [autoStart, run]);
+    if (!autoStart) return;
+    void runRef.current();
+    // Auto-start once on mount — do not re-run when `run` identity changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoStart]);
 
   return (
     <div className={`agent-panel ${guarded ? "agent-panel--guarded" : "agent-panel--bare"}`}>

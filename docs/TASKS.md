@@ -44,7 +44,7 @@ video depends on it.
 
 ## Task 5 — split screen
 
-`src/dyepack/react/` gets `DyeZone`, `useDyePack`, `useWebMCPTool`. The blocked
+`src/dyepack/react/` gets `DyeZone`, `useDyePack`. The blocked
 call must scroll the culprit review into view and mark it. That visual link is
 the wow moment; if it is not obvious in one frame, the demo has failed.
 

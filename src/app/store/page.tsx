@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { useDyePack } from "@/dyepack/react";
 import { StoreView } from "@/components/StoreView";
@@ -32,7 +33,7 @@ export default function StorePage() {
           ChatGPT can drive this page directly.
         </p>
         <nav className="page-head__nav">
-          <a href="/split">See the split demo →</a>
+          <Link href="/split">See the split demo →</Link>
         </nav>
       </header>
       <StoreView highlightedZone={highlightedZone} />

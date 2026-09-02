@@ -38,8 +38,8 @@ score. Budget roughly 70% engineering / 30% presentation.
 ## Hard submission requirements
 
 - [x] Open-source LICENSE detectable at repo root — already committed
-- [ ] Live URL reachable in ChatGPT's in-app browser or Chrome with WebMCP on
-- [ ] Public repo (GitHub) with all source
+- [x] Live URL reachable in ChatGPT's in-app browser or Chrome with WebMCP on
+- [x] Public repo (GitHub) with all source
 - [ ] Public YouTube demo video, **under 3 minutes**, with audio
 - [ ] Written description: why WebMCP fits, how it improves UX, implementation
 
@@ -48,10 +48,9 @@ Project must be new work created during the submission window (opened 25 Aug
 
 ## Environment gate
 
-WebMCP needs **Chrome 149+** with `chrome://flags/#enable-webmcp-testing`.
-Only Brave is installed on this machine — Brave strips Chrome's AI features.
-Until Chrome is installed, `/smoke` cannot pass and nothing can be verified
-against the real API. `pnpm test` still exercises the guard logic headlessly.
+WebMCP needs **Chrome 149+** with `chrome://flags/#enable-webmcp-testing`
+(or CLI flags — see README `pnpm smoke:browser`). Chrome 152 verified locally
+and on production. `pnpm test` exercises guard logic headlessly without a browser.
 
 ## Architecture decisions
 

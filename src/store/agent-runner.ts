@@ -175,13 +175,17 @@ function optsFrom(
 }
 
 function sleep(ms: number, signal?: AbortSignal): Promise<void> {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
+    if (signal?.aborted) {
+      resolve();
+      return;
+    }
     const t = setTimeout(resolve, ms);
     signal?.addEventListener(
       "abort",
       () => {
         clearTimeout(t);
-        reject(new DOMException("Aborted", "AbortError"));
+        resolve();
       },
       { once: true },
     );
