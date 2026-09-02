@@ -21,6 +21,12 @@ Built for [The WebMCP Challenge](https://webmcp.devpost.com/) (Aug 25 – Sep 3,
 
 **Remaining for submission:** YouTube demo, Devpost submit.
 
+| Doc | Purpose |
+|---|---|
+| [docs/DEPLOY.md](./docs/DEPLOY.md) | Vercel, GitHub Actions, `OPENAI_API_KEY` |
+| [docs/VERIFICATION.md](./docs/VERIFICATION.md) | Pre-submit checklist incl. ChatGPT browser |
+| [docs/DEMO-SCRIPT.md](./docs/DEMO-SCRIPT.md) | Video beat sheet |
+
 | Route | What it is |
 |---|---|
 | `/` | Landing — the thesis |
@@ -63,7 +69,10 @@ Automated gate (requires Google Chrome installed):
 pnpm dev          # terminal 1
 pnpm smoke:browser                    # localhost
 SMOKE_URL=https://dyepack-liard.vercel.app pnpm smoke:browser   # production
+SKIP_SMOKE_BROWSER=1 pnpm smoke:browser   # CI skip (no Chrome on runners)
 ```
+
+Health check: `GET /api/health` — reports `liveLLM: true` when `OPENAI_API_KEY` is set on Vercel.
 
 ## The module
 

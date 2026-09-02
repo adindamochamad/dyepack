@@ -8,7 +8,8 @@
     "start": "next start",
     "test": "node --import tsx --test scripts/*.test.ts",
     "typecheck": "tsc --noEmit",
-    "smoke:browser": "node scripts/webmcp-smoke-probe.mjs"
+    "smoke:browser": "node scripts/webmcp-smoke-probe.mjs",
+    "smoke:ci": "SKIP_SMOKE_BROWSER=1 node scripts/webmcp-smoke-probe.mjs"
   },
   "dependencies": {
     "next": "16.3.4",

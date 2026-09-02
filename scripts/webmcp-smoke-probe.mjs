@@ -3,12 +3,8 @@
  * Requires: Google Chrome 149+, dev server on localhost:3000
  */
 import puppeteer from "puppeteer-core";
+import { existsSync } from "node:fs";
 import { setTimeout as sleep } from "node:timers/promises";
-
-const CHROME =
-  process.platform === "darwin"
-    ? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-    : process.env.CHROME_PATH ?? "google-chrome";
 
 const BASE = process.env.SMOKE_URL ?? "http://localhost:3000";
 const SMOKE = `${BASE}/smoke`;
@@ -27,13 +23,33 @@ async function waitForServer(url, attempts = 30) {
 }
 
 async function main() {
-  console.log(`Chrome: ${CHROME}`);
+  if (process.env.SKIP_SMOKE_BROWSER === "1") {
+    console.log("SKIP_SMOKE_BROWSER=1 — skipping Chrome WebMCP probe (CI has no Chrome).");
+    return;
+  }
+
+  const chromePath =
+    process.env.CHROME_PATH ??
+    (process.platform === "darwin"
+      ? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+      : "google-chrome");
+
+  if (!existsSync(chromePath) && process.platform !== "win32") {
+    const msg = `Google Chrome not found at ${chromePath}`;
+    if (process.env.CI) {
+      console.log(`${msg} — skipping in CI. Run locally or set CHROME_PATH.`);
+      return;
+    }
+    throw new Error(`${msg}. Install Chrome 149+ or set CHROME_PATH.`);
+  }
+
+  console.log(`Chrome: ${chromePath}`);
   console.log(`Target: ${SMOKE}`);
 
   await waitForServer(BASE);
 
   const browser = await puppeteer.launch({
-    executablePath: CHROME,
+    executablePath: chromePath,
     headless: false,
     args: [
       "--no-first-run",
